@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendzyMart.lk - Sri Lanka's Favorite Online Reselling Store</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f6ff',
+                            100: '#e0edff',
+                            500: '#2563eb',
+                            600: '#1d4ed8',
+                            700: '#1e40af',
+                            accent: '#ff4757',
+                            emerald: '#10b981',
+                            gold: '#f59e0b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-short': 'bounce 1s infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    },
+                    keyframes: {
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts (Plus Jakarta Sans) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-family-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Canvas Confetti for Celebration effects -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .badge-pulse {
+            box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7);
+            animation: pulse-ring 1.8s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+        @keyframes pulse-ring {
+            to { box-shadow: 0 0 0 10px rgba(255, 71, 87, 0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased selection:bg-brand-500 selection:text-white pb-20 md:pb-0">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-gradient-to-r from-brand-700 via-brand-600 to-brand-500 text-white text-xs md:text-sm py-2 px-4 text-center font-medium shadow-inner flex justify-between items-center">
+        <div class="container mx-auto flex justify-between items-center">
+            <p class="w-full text-center sm:text-left flex items-center justify-center sm:justify-start gap-2">
+                <span class="bg-brand-accent text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider badge-pulse">HOT</span>
+                <span>🔥 Islandwide Cash on Delivery (COD) | Delivery in 2-3 Days!</span>
+            </p>
+            <div class="hidden sm:flex items-center space-x-6 text-xs">
+                <a href="#order-track-modal" onclick="openTrackModal()" class="hover:underline flex items-center gap-1">
+                    <i class="fa-solid fa-truck-fast"></i> Track Order
+                </a>
+                <a href="https://wa.me/94771234567" target="_blank" class="hover:underline flex items-center gap-1 font-semibold text-emerald-300">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Direct WhatsApp Order
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <header class="sticky top-0 z-40 glass-header border-b border-gray-200 transition-all duration-300 shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
+            
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center text-white font-black text-xl shadow-md group-hover:scale-105 transition-transform">
+                    T
+                </div>
+                <div>
+                    <span class="text-xl md:text-2xl font-black tracking-tight text-gray-900">Trendzy<span class="text-brand-accent">Mart</span><span class="text-brand-600 text-xs font-bold uppercase ml-0.5">.lk</span></span>
+                    <span class="block text-[9px] text-gray-500 font-semibold uppercase tracking-widest -mt-1">Quality Guaranteed</span>
+                </div>
+            </a>
+
+            <!-- Search Bar (Desktop & Tablet) -->
+            <div class="hidden md:flex flex-1 max-w-md mx-4 relative">
+                <input type="text" id="searchInput" oninput="handleSearch()" placeholder="Search Home, Kitchen, Kids, Clothes..." 
+                    class="w-full pl-10 pr-10 py-2.5 rounded-full border border-gray-300 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent text-sm transition-all shadow-inner">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400"></i>
+                <button id="clearSearch" onclick="clearSearchInput()" class="hidden absolute right-3.5 top-3 text-gray-400 hover:text-gray-600">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Header Actions -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                
+                <!-- Wishlist Button -->
+                <button onclick="toggleWishlistDrawer()" class="relative p-2.5 text-gray-700 hover:text-brand-600 hover:bg-gray-100 rounded-full transition-colors" title="Wishlist">
+                    <i class="fa-regular fa-heart text-xl"></i>
+                    <span id="wishlistCount" class="absolute top-1 right-1 bg-brand-accent text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center scale-0 transition-transform">0</span>
+                </button>
+
+                <!-- Cart Button -->
+                <button onclick="toggleCartDrawer()" class="relative p-2.5 bg-brand-50 text-brand-600 hover:bg-brand-100 rounded-full transition-colors flex items-center gap-2 px-3 sm:px-4 font-semibold text-sm shadow-sm" title="Cart">
+                    <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    <span class="hidden sm:inline">Cart</span>
+                    <span id="cartCount" class="bg-brand-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                </button>
+
+                <!-- Mobile Navigation Menu Toggle -->
+                <button onclick="toggleMobileMenu()" class="p-2 md:hidden text-gray-700 hover:text-brand-600 focus:outline-none">
+                    <i class="fa-solid fa-bars-staggered text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Search Input Bar -->
+        <div class="px-4 pb-3 md:hidden">
+            <div class="relative">
+                <input type="text" id="mobileSearchInput" oninput="handleMobileSearch()" placeholder="Search TrendzyMart products..." 
+                    class="w-full pl-10 pr-10 py-2 rounded-lg border border-gray-300 bg-gray-50 focus:bg-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-2.5 text-gray-400"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU DRAWER -->
+    <div id="mobileMenu" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300 flex justify-end">
+        <div class="bg-white w-4/5 max-w-sm h-full shadow-2xl p-6 flex flex-col justify-between overflow-y-auto transform translate-x-full transition-transform duration-300" id="mobileMenuContainer">
+            <div>
+                <div class="flex items-center justify-between pb-4 border-b border-gray-100">
+                    <span class="font-bold text-lg text-gray-900">Navigation</span>
+                    <button onclick="toggleMobileMenu()" class="text-gray-500 hover:text-red-500 p-1">
+                        <i class="fa-solid fa-xmark text-2xl"></i>
+                    </button>
+                </div>
+                <div class="mt-6 flex flex-col space-y-4">
+                    <a href="#hero" onclick="toggleMobileMenu()" class="text-gray-700 font-medium hover:text-brand-600 flex items-center gap-3">
+                        <i class="fa-solid fa-house w-5 text-brand-500"></i> Home
+                    </a>
+                    <a href="#categories" onclick="toggleMobileMenu()" class="text-gray-700 font-medium hover:text-brand-600 flex items-center gap-3">
+                        <i class="fa-solid fa-border-all w-5 text-brand-500"></i> Categories
+                    </a>
+                    <a href="#products" onclick="toggleMobileMenu()" class="text-gray-700 font-medium hover:text-brand-600 flex items-center gap-3">
+                        <i class="fa-solid fa-fire w-5 text-brand-accent"></i> Hot Products
+                    </a>
+                    <a href="#reviews" onclick="toggleMobileMenu()" class="text-gray-700 font-medium hover:text-brand-600 flex items-center gap-3">
+                        <i class="fa-solid fa-star w-5 text-brand-gold"></i> Reviews
+                    </a>
+                    <button onclick="openTrackModal(); toggleMobileMenu();" class="text-left text-gray-700 font-medium hover:text-brand-600 flex items-center gap-3">
+                        <i class="fa-solid fa-truck-fast w-5 text-brand-500"></i> Track My Parcel
+                    </button>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-gray-100">
+                <a href="https://wa.me/94771234567" target="_blank" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> Chat & Order on WhatsApp
+                </a>
+                <p class="text-xs text-center text-gray-400 mt-4">TrendzyMart.lk &copy; 2026. All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative bg-gradient-to-br from-gray-900 via-brand-700 to-brand-600 text-white overflow-hidden py-12 md:py-20">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="container mx-auto px-4 relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            
+            <!-- Hero Text Content -->
+            <div class="space-y-6 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs md:text-sm font-semibold border border-white/20 text-yellow-300">
+                    <i class="fa-solid fa-bolt text-brand-accent animate-bounce"></i>
+                    <span>Sri Lanka's #1 Trending Product Store</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+                    Upgrade Your Life with <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-pink-300 to-emerald-300">Trending Gadgets</span> & Items!
+                </h1>
+
+                <p class="text-gray-200 text-sm md:text-base max-w-lg mx-auto md:mx-0 font-normal leading-relaxed">
+                    Home, Kitchen, Kids toys, Electrical items & Fashion delivered straight to your door step with Cash On Delivery anywhere in Sri Lanka!
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-3 pt-2">
+                    <a href="#products" class="w-full sm:w-auto px-7 py-3.5 bg-brand-accent hover:bg-red-600 text-white font-bold rounded-xl shadow-lg shadow-red-500/30 transition-all hover:scale-105 text-center flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-bag-shopping"></i> Shop Now
+                    </a>
+                    <a href="https://wa.me/94771234567" target="_blank" class="w-full sm:w-auto px-7 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/30 transition-all hover:scale-105 text-center flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-xl"></i> WhatsApp Catalog
+                    </a>
+                </div>
+
+                <!-- Stats / Highlights -->
+                <div class="pt-6 grid grid-cols-3 gap-2 border-t border-white/10 max-w-md mx-auto md:mx-0 text-center">
+                    <div>
+                        <span class="block text-xl md:text-2xl font-black text-white">5,000+</span>
+                        <span class="text-[11px] text-gray-300">Happy Customers</span>
+                    </div>
+                    <div>
+                        <span class="block text-xl md:text-2xl font-black text-white">24-48h</span>
+                        <span class="text-[11px] text-gray-300">Fast Shipping</span>
+                    </div>
+                    <div>
+                        <span class="block text-xl md:text-2xl font-black text-white">100%</span>
+                        <span class="text-[11px] text-gray-300">COD Available</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Feature Banner Graphic -->
+            <div class="relative flex justify-center">
+                <div class="relative w-full max-w-md rounded-2xl bg-white/10 backdrop-blur-md p-4 border border-white/20 shadow-2xl overflow-hidden group">
+                    <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-accent/30 rounded-full blur-3xl"></div>
+                    <div class="relative rounded-xl overflow-hidden aspect-video sm:aspect-square bg-gray-800 flex items-center justify-center">
+                        <img id="heroImage" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=800&q=80" 
+                            alt="Trending Items TrendzyMart" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        
+                        <!-- Floating Discount Badge -->
+                        <div class="absolute top-4 right-4 bg-brand-accent text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1">
+                            <i class="fa-solid fa-fire text-yellow-300"></i> UP TO 50% OFF
+                        </div>
+
+                        <!-- Floating Promo Tag -->
+                        <div class="absolute bottom-4 left-4 right-4 bg-gray-900/80 backdrop-blur-md p-3 rounded-xl border border-white/10 text-white text-left">
+                            <p class="text-xs font-semibold text-yellow-300 uppercase tracking-wider">Today's Highlight</p>
+                            <p class="text-sm font-bold truncate" id="heroProductTitle">Smart Portable Juicer & Rechargeable Blender</p>
+                            <div class="flex items-center justify-between mt-1">
+                                <span class="text-sm font-extrabold text-emerald-400">LKR 3,450 <span class="text-xs text-gray-400 line-through">LKR 4,900</span></span>
+                                <button onclick="quickViewProduct(1)" class="text-xs bg-white text-gray-900 font-bold px-2.5 py-1 rounded-md hover:bg-yellow-300 transition-colors">
+                                    Quick View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CATEGORIES SECTION -->
+    <section id="categories" class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+                <div>
+                    <span class="text-brand-600 font-bold text-xs uppercase tracking-wider">Explore Collections</span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">Shop By Categories</h2>
+                </div>
+                <p class="text-sm text-gray-500 mt-2 md:mt-0">Find top-rated trending items across all essential departments</p>
+            </div>
+
+            <!-- Categories Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                
+                <!-- Category Card 1 -->
+                <button onclick="filterCategory('home')" class="category-btn group p-4 rounded-2xl bg-slate-50 hover:bg-brand-50 border border-slate-200 hover:border-brand-300 text-center transition-all duration-300 hover:-translate-y-1 shadow-sm">
+                    <div class="w-14 h-14 mx-auto rounded-2xl bg-blue-100 text-brand-600 flex items-center justify-center text-2xl group-hover:bg-brand-600 group-hover:text-white transition-colors shadow-sm">
+                        <i class="fa-solid fa-house-laptop"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mt-3 text-sm group-hover:text-brand-600">Home & Decor</h3>
+                    <span class="text-xs text-gray-400 block mt-0.5">24+ Items</span>
+                </button>
+
+                <!-- Category Card 2 -->
+                <button onclick="filterCategory('kitchen')" class="category-btn group p-4 rounded-2xl bg-slate-50 hover:bg-amber-50 border border-slate-200 hover:border-amber-300 text-center transition-all duration-300 hover:-translate-y-1 shadow-sm">
+                    <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl group-hover:bg-amber-500 group-hover:text-white transition-colors shadow-sm">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mt-3 text-sm group-hover:text-amber-600">Kitchen Essentials</h3>
+                    <span class="text-xs text-gray-400 block mt-0.5">18+ Items</span>
+                </button>
+
+                <!-- Category Card 3 -->
+                <button onclick="filterCategory('kids')" class="category-btn group p-4 rounded-2xl bg-slate-50 hover:bg-pink-50 border border-slate-200 hover:border-pink-300 text-center transition-all duration-300 hover:-translate-y-1 shadow-sm">
+                    <div class="w-14 h-14 mx-auto rounded-2xl bg-pink-100 text-pink-600 flex items-center justify-center text-2xl group-hover:bg-pink-500 group-hover:text-white transition-colors shadow-sm">
+                        <i class="fa-solid fa-baby-carriage"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mt-3 text-sm group-hover:text-pink-600">Kids & Toys</h3>
+                    <span class="text-xs text-gray-400 block mt-0.5">15+ Items</span>
+                </button>
+
+                <!-- Category Card 4 -->
+                <button onclick="filterCategory('electrical')" class="category-btn group p-4 rounded-2xl bg-slate-50 hover:bg-purple-50 border border-slate-200 hover:border-purple-300 text-center transition-all duration-300 hover:-translate-y-1 shadow-sm">
+                    <div class="w-14 h-14 mx-auto rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl group-hover:bg-purple-600 group-hover:text-white transition-colors shadow-sm">
+                        <i class="fa-solid fa-plug-circle-bolt"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mt-3 text-sm group-hover:text-purple-600">Electrical & Tech</h3>
+                    <span class="text-xs text-gray-400 block mt-0.5">30+ Items</span>
+                </button>
+
+                <!-- Category Card 5 -->
+                <button onclick="filterCategory('clothes')" class="category-btn group p-4 rounded-2xl bg-slate-50 hover:bg-emerald-50 border border-slate-200 hover:border-emerald-300 text-center transition-all duration-300 hover:-translate-y-1 shadow-sm col-span-2 sm:col-span-1">
+                    <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl group-hover:bg-emerald-600 group-hover:text-white transition-colors shadow-sm">
+                        <i class="fa-solid fa-shirt"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mt-3 text-sm group-hover:text-emerald-600">Fashion & Clothes</h3>
+                    <span class="text-xs text-gray-400 block mt-0.5">20+ Items</span>
+                </button>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FLASH DEAL COUNTDOWN BAR -->
+    <section class="bg-gradient-to-r from-red-600 via-brand-accent to-pink-600 text-white py-6 shadow-md">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl animate-bounce">⚡</span>
+                <div>
+                    <h3 class="text-lg md:text-xl font-black uppercase tracking-wider">Mega Flash Sale - Limited Stock!</h3>
+                    <p class="text-xs text-red-100">Grab your favorite items with discount up to 40% before timer runs out!</p>
+                </div>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="flex items-center gap-2 font-black text-center" id="countdownTimer">
+                <div class="bg-black/30 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/20">
+                    <span id="hours" class="text-xl md:text-2xl font-bold">05</span>
+                    <span class="text-[9px] uppercase block text-red-200 font-medium">Hours</span>
+                </div>
+                <span class="text-xl font-bold">:</span>
+                <div class="bg-black/30 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/20">
+                    <span id="minutes" class="text-xl md:text-2xl font-bold">42</span>
+                    <span class="text-[9px] uppercase block text-red-200 font-medium">Mins</span>
+                </div>
+                <span class="text-xl font-bold">:</span>
+                <div class="bg-black/30 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/20">
+                    <span id="seconds" class="text-xl md:text-2xl font-bold">18</span>
+                    <span class="text-[9px] uppercase block text-red-200 font-medium">Secs</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN PRODUCT CATALOG SECTION -->
+    <section id="products" class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            
+            <!-- Section Header & Filter Controls -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
+                <div>
+                    <span class="text-brand-accent font-bold text-xs uppercase tracking-wider">Top Deals in Sri Lanka</span>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-0.5">Featured Reselling Products</h2>
+                </div>
+
+                <!-- Category Filter Pills -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-2 hide-scrollbar">
+                    <button onclick="filterCategory('all')" class="cat-pill active-pill px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm whitespace-nowrap bg-brand-600 text-white">
+                        All Items
+                    </button>
+                    <button onclick="filterCategory('home')" class="cat-pill px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm whitespace-nowrap bg-white text-gray-700 hover:bg-brand-50 hover:text-brand-600 border border-gray-200">
+                        🏠 Home
+                    </button>
+                    <button onclick="filterCategory('kitchen')" class="cat-pill px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm whitespace-nowrap bg-white text-gray-700 hover:bg-brand-50 hover:text-brand-600 border border-gray-200">
+                        🍳 Kitchen
+                    </button>
+                    <button onclick="filterCategory('kids')" class="cat-pill px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm whitespace-nowrap bg-white text-gray-700 hover:bg-brand-50 hover:text-brand-600 border border-gray-200">
+                        🧸 Kids
+                    </button>
+                    <button onclick="filterCategory('electrical')" class="cat-pill px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm whitespace-nowrap bg-white text-gray-700 hover:bg-brand-50 hover:text-brand-600 border border-gray-200">
+                        ⚡ Electrical
+                    </button>
+                    <button onclick="filterCategory('clothes')" class="cat-pill px-4 py-2 rounded-full text-xs font-bold transition-all shadow-sm whitespace-nowrap bg-white text-gray-700 hover:bg-brand-50 hover:text-brand-600 border border-gray-200">
+                        👕 Clothes
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dynamic Product Grid -->
+            <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- Javascript will inject product cards here dynamic -->
+            </div>
+
+            <!-- Empty Search Result Indicator -->
+            <div id="noResults" class="hidden text-center py-16">
+                <div class="w-20 h-20 mx-auto bg-gray-100 rounded-full flex items-center justify-center text-gray-400 text-3xl mb-4">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800">No items found</h3>
+                <p class="text-sm text-gray-500 mt-1">Try searching with a different keyword or category.</p>
+                <button onclick="filterCategory('all')" class="mt-4 px-5 py-2 bg-brand-600 text-white rounded-lg text-xs font-bold hover:bg-brand-700 transition-colors">
+                    Reset Filters
+                </button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- TRUST & BENEFITS SECTION -->
+    <section class="py-12 bg-white border-y border-gray-200">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 text-center md:text-left">
+                
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                    <div class="w-12 h-12 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm">Islandwide Delivery</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Quick courier delivery to your doorstep in 2-3 days.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm">Cash On Delivery</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Pay safely after checking package with courier.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm">Quality Checked</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">All products tested & verified before dispatching.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-brands fa-whatsapp text-2xl"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-sm">Instant WhatsApp Support</h4>
+                        <p class="text-xs text-gray-500 mt-0.5">Friendly customer help line available anytime.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CUSTOMER REVIEWS / TESTIMONIALS -->
+    <section id="reviews" class="py-12 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-xl mx-auto mb-10">
+                <span class="text-brand-gold font-bold text-xs uppercase tracking-wider">Verified Buyers</span>
+                <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1">What Our Customers Say</h2>
+                <p class="text-sm text-gray-500 mt-1">Over 5,000+ satisfied buyers across Colombo, Kandy, Galle & Jaffna!</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm relative">
+                    <div class="flex items-center gap-1 text-amber-400 text-sm mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 text-xs md:text-sm italic leading-relaxed">
+                        "Mama gaththa portable mini blender eka supirima quality! Order karala 2 days walin Colombo walata awa. Cash on delivery thiyena nisa bays nathuwa ganna puluwan."
+                    </p>
+                    <div class="flex items-center gap-3 mt-4 pt-4 border-t border-gray-100">
+                        <div class="w-9 h-9 rounded-full bg-brand-100 text-brand-600 font-bold flex items-center justify-center text-sm">
+                            K
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-bold text-gray-900">Kasun Jayasinghe</h5>
+                            <span class="text-[10px] text-emerald-600 font-semibold"><i class="fa-solid fa-circle-check"></i> Verified Buyer (Colombo)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm relative">
+                    <div class="flex items-center gap-1 text-amber-400 text-sm mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 text-xs md:text-sm italic leading-relaxed">
+                        "Kitchen organizers and kids toys set eka godak lassanai. Packing elakiri widiyata thibba. WhatsApp support eka dynamic and fast. Highly recommended TrendzyMart!"
+                    </p>
+                    <div class="flex items-center gap-3 mt-4 pt-4 border-t border-gray-100">
+                        <div class="w-9 h-9 rounded-full bg-pink-100 text-pink-600 font-bold flex items-center justify-center text-sm">
+                            D
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-bold text-gray-900">Dilini Perera</h5>
+                            <span class="text-[10px] text-emerald-600 font-semibold"><i class="fa-solid fa-circle-check"></i> Verified Buyer (Kandy)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm relative">
+                    <div class="flex items-center gap-1 text-amber-400 text-sm mb-3">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 text-xs md:text-sm italic leading-relaxed">
+                        "Smart watch and wireless earbuds dekama supiri deal ekakata gaththa. Market price ekata wadiya godak adui. Delivery speed ekath niyamai machan!"
+                    </p>
+                    <div class="flex items-center gap-3 mt-4 pt-4 border-t border-gray-100">
+                        <div class="w-9 h-9 rounded-full bg-purple-100 text-purple-600 font-bold flex items-center justify-center text-sm">
+                            N
+                        </div>
+                        <div>
+                            <h5 class="text-xs font-bold text-gray-900">Nuwan Fernando</h5>
+                            <span class="text-[10px] text-emerald-600 font-semibold"><i class="fa-solid fa-circle-check"></i> Verified Buyer (Galle)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-300 pt-12 pb-24 md:pb-12 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                
+                <!-- Brand Info -->
+                <div class="space-y-4">
+                    <a href="#" class="flex items-center gap-2">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-accent flex items-center justify-center text-white font-black text-lg">
+                            T
+                        </div>
+                        <span class="text-xl font-extrabold text-white">Trendzy<span class="text-brand-accent">Mart</span><span class="text-brand-500 text-xs font-bold">.lk</span></span>
+                    </a>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Sri Lanka's trusted reselling partner for trending household items, kitchen tools, smart electronics, kids toys & modern fashion.
+                    </p>
+                    <div class="flex space-x-3 text-lg text-gray-400">
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-brand-600 hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-facebook-f text-xs"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-pink-600 hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-instagram text-xs"></i></a>
+                        <a href="https://wa.me/94771234567" target="_blank" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-emerald-500 hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-whatsapp text-xs"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-black hover:text-white flex items-center justify-center transition-colors"><i class="fa-brands fa-tiktok text-xs"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Categories -->
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Categories</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#products" onclick="filterCategory('home')" class="hover:text-white transition-colors">Home & Decor</a></li>
+                        <li><a href="#products" onclick="filterCategory('kitchen')" class="hover:text-white transition-colors">Kitchen & Dining</a></li>
+                        <li><a href="#products" onclick="filterCategory('kids')" class="hover:text-white transition-colors">Kids & Baby Toys</a></li>
+                        <li><a href="#products" onclick="filterCategory('electrical')" class="hover:text-white transition-colors">Electrical & Smart Gadgets</a></li>
+                        <li><a href="#products" onclick="filterCategory('clothes')" class="hover:text-white transition-colors">Clothes & Fashion</a></li>
+                    </ul>
+                </div>
+
+                <!-- Customer Service -->
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Help & Support</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#order-track-modal" onclick="openTrackModal()" class="hover:text-white transition-colors">Track Order Status</a></li>
+                        <li><a href="https://wa.me/94771234567" target="_blank" class="hover:text-white transition-colors">WhatsApp Order Hotline</a></li>
+                        <li><span class="text-gray-400">Cash on Delivery Policy</span></li>
+                        <li><span class="text-gray-400">Return & Exchange (7 Days)</span></li>
+                    </ul>
+                </div>
+
+                <!-- Contact & Location -->
+                <div>
+                    <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Contact Us</h4>
+                    <ul class="space-y-2.5 text-xs text-gray-400">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-brand-accent"></i> Colombo / Kurunegala, Sri Lanka</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-brand-500"></i> +94 77 123 4567</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-brand-500"></i> sales@trendzymart.lk</li>
+                        <li class="flex items-center gap-2 text-emerald-400 font-semibold"><i class="fa-regular fa-clock"></i> 8:30 AM - 10:00 PM (Daily)</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="pt-6 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+                <p>&copy; 2026 TrendzyMart.lk. Designed for High Converting Reselling Business.</p>
+                <div class="flex items-center space-x-4">
+                    <span class="bg-gray-800 px-2.5 py-1 rounded text-[10px] text-gray-300">💵 COD Available</span>
+                    <span class="bg-gray-800 px-2.5 py-1 rounded text-[10px] text-gray-300">🚚 Courier Service</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CART DRAWER -->
+    <div id="cartDrawer" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300 flex justify-end">
+        <div id="cartDrawerContainer" class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300">
+            
+            <!-- Cart Header -->
+            <div class="p-4 sm:p-6 border-b border-gray-200 flex items-center justify-between bg-gray-50">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-brand-600 text-xl"></i>
+                    <h3 class="font-bold text-lg text-gray-900">Your Shopping Cart</h3>
+                    <span id="cartDrawerBadge" class="bg-brand-100 text-brand-700 text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                </div>
+                <button onclick="toggleCartDrawer()" class="text-gray-400 hover:text-gray-700 p-1">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Cart Items List -->
+            <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
+                <!-- Cart items rendered dynamically -->
+            </div>
+
+            <!-- Cart Footer / Checkout -->
+            <div class="p-4 sm:p-6 border-t border-gray-200 bg-gray-50 space-y-3">
+                
+                <!-- Shipping Zone Selector -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">Select Delivery Area:</label>
+                    <select id="shippingZone" onchange="updateCartTotals()" class="w-full text-xs p-2 rounded-lg border border-gray-300 bg-white focus:ring-2 focus:ring-brand-500">
+                        <option value="350">Western Province Courier (LKR 350)</option>
+                        <option value="400">Outstation / Islandwide Courier (LKR 400)</option>
+                    </select>
+                </div>
+
+                <div class="space-y-1.5 text-xs text-gray-600 pt-2 border-t border-gray-200">
+                    <div class="flex justify-between">
+                        <span>Items Subtotal:</span>
+                        <span id="cartSubtotal" class="font-semibold text-gray-800">LKR 0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Courier Shipping Charge:</span>
+                        <span id="cartShipping" class="font-semibold text-gray-800">LKR 350</span>
+                    </div>
+                    <div class="flex justify-between text-base font-extrabold text-gray-900 pt-2 border-t border-gray-200">
+                        <span>Total Payable (COD):</span>
+                        <span id="cartGrandTotal" class="text-brand-600">LKR 350</span>
+                    </div>
+                </div>
+
+                <!-- Order Buttons -->
+                <div class="pt-2 space-y-2">
+                    <button onclick="checkoutViaWhatsApp()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 transition-all hover:scale-[1.01]">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Order via WhatsApp Direct
+                    </button>
+                    <button onclick="openCheckoutModal()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-clipboard-check"></i> Fill Address Form (COD)
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- QUICK VIEW MODAL -->
+    <div id="quickViewModal" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <div id="quickViewContainer" class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300 max-h-[90vh] flex flex-col md:flex-row relative">
+            <button onclick="closeQuickView()" class="absolute top-3 right-3 z-10 w-8 h-8 bg-black/50 text-white hover:bg-black rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Product Image -->
+            <div class="w-full md:w-1/2 bg-gray-100 relative min-h-[220px] md:min-h-full flex items-center justify-center">
+                <img id="qvImage" src="" alt="" class="w-full h-full object-cover">
+                <span id="qvBadge" class="absolute top-3 left-3 bg-brand-accent text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">
+                    Sale
+                </span>
+            </div>
+
+            <!-- Product Details -->
+            <div class="w-full md:w-1/2 p-6 flex flex-col justify-between overflow-y-auto">
+                <div>
+                    <span id="qvCategory" class="text-xs font-bold text-brand-600 uppercase tracking-wider">Category</span>
+                    <h3 id="qvTitle" class="text-lg md:text-xl font-bold text-gray-900 mt-1">Product Title</h3>
+                    
+                    <div class="flex items-center gap-2 mt-2">
+                        <div class="flex text-amber-400 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="text-xs text-gray-500">(4.9/5 Rating)</span>
+                    </div>
+
+                    <div class="mt-4 flex items-baseline gap-2">
+                        <span id="qvPrice" class="text-2xl font-black text-brand-600">LKR 0</span>
+                        <span id="qvOldPrice" class="text-sm text-gray-400 line-through">LKR 0</span>
+                    </div>
+
+                    <p id="qvDescription" class="text-xs text-gray-600 mt-3 leading-relaxed">
+                        Detailed item description will appear here...
+                    </p>
+
+                    <!-- Stock Status -->
+                    <div class="mt-4 flex items-center gap-2 text-xs font-semibold text-emerald-600">
+                        <i class="fa-solid fa-circle-check"></i> In Stock (Ready for Cash On Delivery)
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-gray-100 flex items-center gap-3">
+                    <button id="qvAddToCartBtn" onclick="" class="flex-1 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-colors">
+                        <i class="fa-solid fa-cart-plus"></i> Add To Cart
+                    </button>
+                    <button id="qvWhatsAppBtn" onclick="" class="p-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-lg flex items-center justify-center shadow-md">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- COD FORM CHECKOUT MODAL -->
+    <div id="checkoutModal" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-2xl p-6 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeCheckoutModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <h3 class="text-lg font-bold text-gray-900 border-b pb-3 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-truck-ramp-box text-brand-600"></i> Cash On Delivery Checkout
+            </h3>
+
+            <form id="codOrderForm" onsubmit="submitCodOrder(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Your Full Name *</label>
+                    <input type="text" id="custName" required placeholder="e.g. Kasun Perera" class="w-full p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Mobile Phone Number (WhatsApp preferred) *</label>
+                    <input type="tel" id="custPhone" required placeholder="e.g. 0771234567" class="w-full p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Delivery Delivery Address *</label>
+                    <textarea id="custAddress" required rows="2" placeholder="House No, Street, Town/City, District" class="w-full p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-gray-700 mb-1">Nearest City / District *</label>
+                    <input type="text" id="custCity" required placeholder="e.g. Maharagama, Colombo" class="w-full p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+
+                <div class="bg-gray-50 p-3 rounded-lg border border-gray-200 text-gray-600 space-y-1">
+                    <p class="font-bold text-gray-800">Order Summary:</p>
+                    <div class="flex justify-between">
+                        <span>Items Total:</span>
+                        <span id="modalSubtotal" class="font-semibold">LKR 0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Courier Delivery:</span>
+                        <span id="modalShipping" class="font-semibold">LKR 350</span>
+                    </div>
+                    <div class="flex justify-between text-sm font-extrabold text-brand-600 pt-1 border-t">
+                        <span>Total Cash On Delivery Amount:</span>
+                        <span id="modalGrandTotal">LKR 350</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm shadow-lg shadow-brand-500/20 transition-all">
+                    <i class="fa-solid fa-circle-check"></i> Confirm Cash On Delivery Order
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ORDER TRACKING MODAL -->
+    <div id="trackModal" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 relative">
+            <button onclick="closeTrackModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-12 h-12 bg-brand-100 text-brand-600 rounded-full flex items-center justify-center mx-auto text-xl mb-2">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-900">Track Your TrendzyMart Order</h3>
+                <p class="text-xs text-gray-500">Enter your order ID or mobile phone number</p>
+            </div>
+
+            <div class="space-y-4">
+                <input type="text" id="trackInput" placeholder="Order ID (e.g. TM-9482) or Phone No" class="w-full p-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 text-xs outline-none">
+                <button onclick="handleTrackSearch()" class="w-full py-2.5 bg-brand-600 text-white font-bold rounded-xl text-xs hover:bg-brand-700">
+                    Search Order
+                </button>
+            </div>
+
+            <div id="trackResult" class="hidden mt-6 p-4 rounded-xl bg-gray-50 border border-gray-200 text-xs space-y-2">
+                <div class="flex items-center justify-between text-emerald-600 font-bold">
+                    <span>Status: Dispatched / Out for Delivery</span>
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <p class="text-gray-600">Expected Delivery: <strong class="text-gray-800">1-2 Days</strong></p>
+                <p class="text-gray-500 text-[11px]">Courier Partner: Pronto / Domex Courier Sri Lanka</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION FLOATER -->
+    <div id="toast" class="fixed bottom-20 md:bottom-6 right-6 bg-gray-900 text-white px-5 py-3 rounded-xl shadow-2xl z-50 flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 text-xs font-semibold">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="toastMessage">Item added to cart!</span>
+    </div>
+
+    <script>
+        // TrendzyMart Product Database
+        const products = [
+            {
+                id: 1,
+                name: "Smart Portable Juicer & Rechargeable Blender",
+                category: "kitchen",
+                price: 3450,
+                oldPrice: 4900,
+                badge: "Hot Sale",
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80",
+                description: "6-blade USB rechargeable portable juicer bottle. Perfect for fresh fruit smoothies, protein shakes, and quick kitchen prep anywhere!"
+            },
+            {
+                id: 2,
+                name: "Automatic Water Dispenser Pump for Bottle",
+                category: "home",
+                price: 1850,
+                oldPrice: 2500,
+                badge: "Best Seller",
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=600&q=80",
+                description: "USB rechargeable smart water pump for 5-gallon water bottles. One key touch button operation, stainless steel pipe."
+            },
+            {
+                id: 3,
+                name: "Interactive Dancing Cactus Toy for Kids",
+                category: "kids",
+                price: 2200,
+                oldPrice: 3100,
+                badge: "Kids Favorite",
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=600&q=80",
+                description: "Singing & dancing repeating cactus toy with colorful LED lights. Repeats what you say in a fun voice. Battery & USB options."
+            },
+            {
+                id: 4,
+                name: "Wireless Bluetooth Earbuds with Charging Case",
+                category: "electrical",
+                price: 2950,
+                oldPrice: 4500,
+                badge: "50% OFF",
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80",
+                description: "Hi-Fi bass noise cancelling TWS wireless earphones. Digital LED display power level indicator, waterproof sweatproof design."
+            },
+            {
+                id: 5,
+                name: "Unisex Modern Oversized Casual Cotton T-Shirt",
+                category: "clothes",
+                price: 1950,
+                oldPrice: 2800,
+                badge: "Trendy",
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=600&q=80",
+                description: "Premium 100% breathable heavy cotton streetwear graphic t-shirt. Available in S, M, L, XL sizes with long-lasting print."
+            },
+            {
+                id: 6,
+                name: "Multi-Function Kitchen Vegetable Slicer & Cutter",
+                category: "kitchen",
+                price: 2650,
+                oldPrice: 3800,
+                badge: "Trending",
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80",
+                description: "9-in-1 vegetable cutter slicer with drain basket. Effortless chopping, grating, and dicing for fast home cooking."
+            },
+            {
+                id: 7,
+                name: "Ultra-Fast Hair Dryer & Styler 1200W",
+                category: "electrical",
+                price: 3800,
+                oldPrice: 5200,
+                badge: "New Arrival",
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80",
+                description: "Ionic ceramic compact hair blow dryer with hot and cool wind modes. Safe heat control technology for silky smooth hair."
+            },
+            {
+                id: 8,
+                name: "Educational Wooden Montessori Puzzle Board",
+                category: "kids",
+                price: 2400,
+                oldPrice: 3200,
+                badge: "Educational",
+                rating: 5.0,
+                image: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=600&q=80",
+                description: "3-in-1 wooden number matching and shape sorting puzzle for toddlers. Non-toxic smooth wood finishing."
+            }
+        ];
+
+        let cart = [];
+        let wishlist = [];
+        let currentCategory = 'all';
+        const WHATSAPP_NUMBER = "94771234567"; // Customize with owner's WhatsApp number
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts(products);
+            startCountdownTimer();
+            
+            // Load saved cart from localStorage if exists
+            const savedCart = localStorage.getItem('trendzyCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartUI();
+            }
+        });
+
+        // Render Product Cards
+        function renderProducts(items) {
+            const grid = document.getElementById('productGrid');
+            const noResults = document.getElementById('noResults');
+
+            if (items.length === 0) {
+                grid.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            grid.innerHTML = items.map(p => {
+                const isWishlist = wishlist.includes(p.id);
+                return `
+                <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+                    <div class="relative overflow-hidden aspect-square bg-gray-100">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        
+                        <!-- Discount Tag -->
+                        <span class="absolute top-2.5 left-2.5 bg-brand-accent text-white text-[10px] font-extrabold px-2 py-0.5 rounded-md uppercase tracking-wider shadow">
+                            ${p.badge}
+                        </span>
+
+                        <!-- Wishlist Toggle -->
+                        <button onclick="toggleWishlist(${p.id})" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/80 backdrop-blur-md text-gray-600 hover:text-brand-accent flex items-center justify-center transition-colors shadow-sm">
+                            <i class="${isWishlist ? 'fa-solid text-brand-accent' : 'fa-regular'} fa-heart text-sm"></i>
+                        </button>
+
+                        <!-- Quick View Overlay Button -->
+                        <button onclick="quickViewProduct(${p.id})" class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md text-gray-900 font-bold text-xs px-3.5 py-1.5 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                            <i class="fa-solid fa-eye"></i> Quick View
+                        </button>
+                    </div>
+
+                    <div class="p-3.5 flex-1 flex flex-col justify-between space-y-2">
+                        <div>
+                            <span class="text-[10px] font-bold text-brand-600 uppercase tracking-wider">${p.category}</span>
+                            <h3 class="font-bold text-gray-800 text-xs sm:text-sm line-clamp-2 mt-0.5 group-hover:text-brand-600 transition-colors">${p.name}</h3>
+                        </div>
+
+                        <div>
+                            <!-- Star Rating -->
+                            <div class="flex items-center gap-1 text-amber-400 text-[11px] my-1">
+                                <i class="fa-solid fa-star"></i>
+                                <span class="text-gray-500 font-medium text-[10px] ml-1">${p.rating}</span>
+                            </div>
+
+                            <!-- Pricing -->
+                            <div class="flex items-baseline gap-1.5 mt-1">
+                                <span class="text-sm sm:text-base font-black text-gray-900">LKR ${p.price.toLocaleString()}</span>
+                                <span class="text-[11px] text-gray-400 line-through">LKR ${p.oldPrice.toLocaleString()}</span>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="mt-3 grid grid-cols-5 gap-1.5">
+                                <button onclick="addToCart(${p.id})" class="col-span-4 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs py-2 rounded-xl flex items-center justify-center gap-1 shadow-sm transition-colors">
+                                    <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                                </button>
+                                <button onclick="orderSingleWhatsApp(${p.id})" class="col-span-1 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl flex items-center justify-center text-sm shadow-sm transition-colors" title="Buy via WhatsApp">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function filterCategory(cat) {
+            currentCategory = cat;
+            
+            // Highlight Pill
+            document.querySelectorAll('.cat-pill').forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white', 'active-pill');
+                btn.classList.add('bg-white', 'text-gray-700');
+            });
+
+            const activeBtn = event ? event.currentTarget : null;
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-gray-700');
+                activeBtn.classList.add('bg-brand-600', 'text-white', 'active-pill');
+            }
+
+            if (cat === 'all') {
+                renderProducts(products);
+            } else {
+                const filtered = products.filter(p => p.category === cat);
+                renderProducts(filtered);
+            }
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const clearBtn = document.getElementById('clearSearch');
+            
+            if (query.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+
+            const filtered = products.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.category.toLowerCase().includes(query)
+            );
+            renderProducts(filtered);
+        }
+
+        function handleMobileSearch() {
+            const query = document.getElementById('mobileSearchInput').value.toLowerCase();
+            const filtered = products.filter(p => 
+                p.name.toLowerCase().includes(query) || 
+                p.category.toLowerCase().includes(query)
+            );
+            renderProducts(filtered);
+        }
+
+        function clearSearchInput() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('clearSearch').classList.add('hidden');
+            renderProducts(products);
+        }
+
+        function addToCart(id) {
+            const item = products.find(p => p.id === id);
+            const existing = cart.find(c => c.id === id);
+
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...item, qty: 1 });
+            }
+
+            saveCart();
+            updateCartUI();
+            showToast(`Added "${item.name.substring(0, 20)}..." to Cart!`);
+
+            // Confetti burst for excitement!
+            confetti({
+                particleCount: 25,
+                spread: 50,
+                origin: { y: 0.8 }
+            });
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(c => c.id === id);
+            if (!item) return;
+
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter(c => c.id !== id);
+            }
+
+            saveCart();
+            updateCartUI();
+        }
+
+        function saveCart() {
+            localStorage.setItem('trendzyCart', JSON.stringify(cart));
+        }
+
+        function updateCartUI() {
+            const countEl = document.getElementById('cartCount');
+            const drawerBadge = document.getElementById('cartDrawerBadge');
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+
+            countEl.innerText = totalQty;
+            drawerBadge.innerText = totalQty;
+
+            // Render Cart Items
+            const itemsList = document.getElementById('cartItemsList');
+            if (cart.length === 0) {
+                itemsList.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <i class="fa-solid fa-bag-shopping text-4xl mb-3"></i>
+                        <p class="font-bold text-gray-600">Your cart is empty</p>
+                        <p class="text-xs">Add items from catalog to proceed with order.</p>
+                    </div>
+                `;
+            } else {
+                itemsList.innerHTML = cart.map(item => `
+                    <div class="flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-200">
+                        <img src="${item.image}" alt="${item.name}" class="w-14 h-14 object-cover rounded-lg">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-bold text-xs text-gray-800 truncate">${item.name}</h4>
+                            <p class="text-xs font-black text-brand-600 mt-0.5">LKR ${(item.price * item.qty).toLocaleString()}</p>
+                            
+                            <div class="flex items-center gap-2 mt-2">
+                                <button onclick="changeQty(${item.id}, -1)" class="w-6 h-6 bg-white border border-gray-300 rounded hover:bg-gray-100 flex items-center justify-center font-bold text-xs">-</button>
+                                <span class="text-xs font-bold px-1">${item.qty}</span>
+                                <button onclick="changeQty(${item.id}, 1)" class="w-6 h-6 bg-white border border-gray-300 rounded hover:bg-gray-100 flex items-center justify-center font-bold text-xs">+</button>
+                            </div>
+                        </div>
+                        <button onclick="changeQty(${item.id}, -${item.qty})" class="text-gray-400 hover:text-red-500 p-1">
+                            <i class="fa-solid fa-trash text-sm"></i>
+                        </button>
+                    </div>
+                `).join('');
+            }
+
+            updateCartTotals();
+        }
+
+        function updateCartTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const shipping = parseInt(document.getElementById('shippingZone').value) || 350;
+            const grandTotal = subtotal > 0 ? subtotal + shipping : 0;
+
+            document.getElementById('cartSubtotal').innerText = `LKR ${subtotal.toLocaleString()}`;
+            document.getElementById('cartShipping').innerText = `LKR ${shipping.toLocaleString()}`;
+            document.getElementById('cartGrandTotal').innerText = `LKR ${grandTotal.toLocaleString()}`;
+
+            // Modal totals
+            document.getElementById('modalSubtotal').innerText = `LKR ${subtotal.toLocaleString()}`;
+            document.getElementById('modalShipping').innerText = `LKR ${shipping.toLocaleString()}`;
+            document.getElementById('modalGrandTotal').innerText = `LKR ${grandTotal.toLocaleString()}`;
+        }
+
+        function checkoutViaWhatsApp() {
+            if (cart.length === 0) {
+                showToast("Your cart is empty!", "error");
+                return;
+            }
+
+            const shipping = parseInt(document.getElementById('shippingZone').value) || 350;
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const total = subtotal + shipping;
+
+            let message = `*NEW ORDER - TRENDZYMART.LK*%0A`;
+            message += `---------------------------------%0A`;
+            cart.forEach((item, index) => {
+                message += `${index + 1}. *${item.name}*%0A   Qty: ${item.qty} x LKR ${item.price} = LKR ${item.qty * item.price}%0A`;
+            });
+            message += `---------------------------------%0A`;
+            message += `Subtotal: LKR ${subtotal}%0A`;
+            message += `Shipping Fee: LKR ${shipping}%0A`;
+            message += `*GRAND TOTAL (COD): LKR ${total}*%0A%0A`;
+            message += `Please confirm my order and request my delivery address details!`;
+
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank');
+        }
+
+        function orderSingleWhatsApp(id) {
+            const item = products.find(p => p.id === id);
+            let message = `*DIRECT ENQUIRY / ORDER - TRENDZYMART.LK*%0A`;
+            message += `Product: *${item.name}*%0A`;
+            message += `Price: LKR ${item.price}%0A%0A`;
+            message += `Hi, I would like to buy this item with Cash on Delivery. Is it available?`;
+
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function toggleWishlist(id) {
+            if (wishlist.includes(id)) {
+                wishlist = wishlist.filter(wId => wId !== id);
+                showToast("Removed from Wishlist");
+            } else {
+                wishlist.push(id);
+                showToast("Saved to Wishlist!");
+            }
+            
+            document.getElementById('wishlistCount').innerText = wishlist.length;
+            document.getElementById('wishlistCount').classList.toggle('scale-0', wishlist.length === 0);
+            renderProducts(products);
+        }
+
+        // Quick View Modal
+        function quickViewProduct(id) {
+            const p = products.find(item => item.id === id);
+            document.getElementById('qvImage').src = p.image;
+            document.getElementById('qvBadge').innerText = p.badge;
+            document.getElementById('qvCategory').innerText = p.category;
+            document.getElementById('qvTitle').innerText = p.name;
+            document.getElementById('qvPrice').innerText = `LKR ${p.price.toLocaleString()}`;
+            document.getElementById('qvOldPrice').innerText = `LKR ${p.oldPrice.toLocaleString()}`;
+            document.getElementById('qvDescription').innerText = p.description;
+
+            document.getElementById('qvAddToCartBtn').onclick = () => {
+                addToCart(p.id);
+                closeQuickView();
+            };
+            document.getElementById('qvWhatsAppBtn').onclick = () => {
+                orderSingleWhatsApp(p.id);
+            };
+
+            const modal = document.getElementById('quickViewModal');
+            const container = document.getElementById('quickViewContainer');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            container.classList.remove('scale-95');
+            container.classList.add('scale-100');
+        }
+
+        function closeQuickView() {
+            const modal = document.getElementById('quickViewModal');
+            const container = document.getElementById('quickViewContainer');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+        }
+
+        // Cart Drawer Toggles
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cartDrawer');
+            const container = document.getElementById('cartDrawerContainer');
+            if (drawer.classList.contains('opacity-0')) {
+                drawer.classList.remove('opacity-0', 'pointer-events-none');
+                container.classList.remove('translate-x-full');
+            } else {
+                drawer.classList.add('opacity-0', 'pointer-events-none');
+                container.classList.add('translate-x-full');
+            }
+        }
+
+        function toggleWishlistDrawer() {
+            if (wishlist.length === 0) {
+                showToast("Wishlist is empty!");
+            } else {
+                const wishlistItems = products.filter(p => wishlist.includes(p.id));
+                renderProducts(wishlistItems);
+                showToast(`Showing ${wishlist.length} saved wishlist items`);
+            }
+        }
+
+        // Mobile Menu Toggles
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const container = document.getElementById('mobileMenuContainer');
+            if (menu.classList.contains('opacity-0')) {
+                menu.classList.remove('opacity-0', 'pointer-events-none');
+                container.classList.remove('translate-x-full');
+            } else {
+                menu.classList.add('opacity-0', 'pointer-events-none');
+                container.classList.add('translate-x-full');
+            }
+        }
+
+        // COD Checkout Form
+        function openCheckoutModal() {
+            if (cart.length === 0) {
+                showToast("Please add items to cart first!", "error");
+                return;
+            }
+            toggleCartDrawer();
+            const modal = document.getElementById('checkoutModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeCheckoutModal() {
+            const modal = document.getElementById('checkoutModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function submitCodOrder(e) {
+            e.preventDefault();
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const address = document.getElementById('custAddress').value;
+            const city = document.getElementById('custCity').value;
+
+            // Generate WhatsApp message with address details
+            let msg = `*NEW COD ORDER - TRENDZYMART.LK*%0A`;
+            msg += `Customer: *${name}*%0APhone: ${phone}%0AAddress: ${address}, ${city}%0A%0A`;
+            msg += `*ORDERED ITEMS:*%0A`;
+            cart.forEach(item => {
+                msg += `- ${item.name} (Qty: ${item.qty}) = LKR ${item.qty * item.price}%0A`;
+            });
+            msg += `%0A*TOTAL CASH ON DELIVERY: ${document.getElementById('modalGrandTotal').innerText}*`;
+
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
+            
+            closeCheckoutModal();
+            cart = [];
+            saveCart();
+            updateCartUI();
+
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // Track Order Modal
+        function openTrackModal() {
+            document.getElementById('trackModal').classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function closeTrackModal() {
+            document.getElementById('trackModal').classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function handleTrackSearch() {
+            const val = document.getElementById('trackInput').value;
+            if (!val) {
+                showToast("Enter a valid Order ID or Phone number!");
+                return;
+            }
+            document.getElementById('trackResult').classList.remove('hidden');
+        }
+
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const message = document.getElementById('toastMessage');
+            const icon = document.getElementById('toastIcon');
+
+            message.innerText = msg;
+            if (type === 'error') {
+                icon.className = "fa-solid fa-triangle-exclamation text-brand-accent text-lg";
+            } else {
+                icon.className = "fa-solid fa-circle-check text-emerald-400 text-lg";
+            }
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Countdown Timer for Flash Sale
+        function startCountdownTimer() {
+            let hours = 5;
+            let minutes = 42;
+            let seconds = 18;
+
+            setInterval(() => {
+                seconds--;
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                    if (minutes < 0) {
+                        minutes = 59;
+                        hours--;
+                    }
+                }
+                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
